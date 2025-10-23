@@ -35,7 +35,7 @@ class DisplayManager:
         else:
             # Use real I2C OLED (for Raspberry Pi)
             serial = i2c(port=1, address=0x3C)
-            from luma.oled import ssd1309
+            from luma.oled.device import ssd1309
             self.device = ssd1309(serial)
             print("Display: Using hardware SSD1309")
 
