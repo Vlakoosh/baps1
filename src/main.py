@@ -33,7 +33,7 @@ class BAPS1:
         # Initialize components
         self.state = StateManager(data_dir="../data")
         self.audio = AudioEngine(sample_rate=22050)
-        self.display = DisplayManager(use_emulator=True)
+        self.display = DisplayManager(use_emulator=False)
         self.input = InputHandler()
         self.sequencer = Sequencer(bpm=self.state.bpm, swing=self.state.swing)
 
