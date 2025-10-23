@@ -91,8 +91,10 @@ class InputHandler:
         self.on_encoder_turn: Optional[Callable[[int, int], None]] = None  # (encoder_num, direction)
 
         if self.use_gpio:
+            print("InputHandler: using GPIO matrix backend")
             self._setup_gpio_matrix()
         else:
+            print("InputHandler: using keyboard fallback backend")
             self._setup_keyboard_fallback()
 
     def get_pad_number(self, button: Button) -> Optional[int]:
@@ -253,9 +255,10 @@ class InputHandler:
         """Initialise GPIO matrix backend."""
         assert GPIO is not None
 
-        # BCM pin numbers for rows/columns
-        self.row_pins: List[int] = [5, 6, 13, 19, 26]
-        self.col_pins: List[int] = [12, 16, 20, 21, 25]
+        # BCM pin numbers for sensing columns/rows
+        # Hardware wiring: columns feed the switch, current flows through diode into the row.
+        self.column_pins: List[int] = [12, 16, 20, 21, 25]  # drive lines
+        self.row_pins: List[int] = [5, 6, 13, 19, 26]       # sense lines
 
         # Physical layout mapping (row-major)
         self.matrix_map: List[List[Button]] = [
@@ -267,9 +270,9 @@ class InputHandler:
         ]
 
         GPIO.setmode(GPIO.BCM)
-        for pin in self.row_pins:
+        for pin in self.column_pins:
             GPIO.setup(pin, GPIO.OUT, initial=GPIO.LOW)
-        for pin in self.col_pins:
+        for pin in self.row_pins:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self._active_buttons: Set[Button] = set()
@@ -281,16 +284,16 @@ class InputHandler:
         pressed_now: Set[Button] = set()
         current_time = time.time()
 
-        for row_idx, row_pin in enumerate(self.row_pins):
-            GPIO.output(row_pin, GPIO.HIGH)
+        for col_idx, col_pin in enumerate(self.column_pins):
+            GPIO.output(col_pin, GPIO.HIGH)
             time.sleep(self.scan_delay)
 
-            for col_idx, col_pin in enumerate(self.col_pins):
-                if GPIO.input(col_pin):
+            for row_idx, row_pin in enumerate(self.row_pins):
+                if GPIO.input(row_pin):
                     button = self.matrix_map[row_idx][col_idx]
                     pressed_now.add(button)
 
-            GPIO.output(row_pin, GPIO.LOW)
+            GPIO.output(col_pin, GPIO.LOW)
 
         new_presses = pressed_now - self._active_buttons
         released = self._active_buttons - pressed_now
@@ -298,6 +301,8 @@ class InputHandler:
         for button in new_presses:
             self.button_press_times[button] = current_time
             self._hold_fired.discard(button)
+            if self.is_pad_button(button):
+                print(f"Pad pressed: {button.name}")
             if self.on_button_press:
                 self.on_button_press(button)
 
