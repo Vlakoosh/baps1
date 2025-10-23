@@ -1,0 +1,100 @@
+{
+  "slices": [
+    {
+      "start": 0,
+      "duration": 0.25000000000000006,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0.24000000000000005,
+      "duration": 0.25100000000000006,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0.4900000000000002,
+      "duration": 0.23000000000000004,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0.7400000000000004,
+      "duration": 0.23000000000000007,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    },
+    {
+      "start": 0,
+      "duration": 0,
+      "volume": 1.0,
+      "pitch_offset": 0.0
+    }
+  ]
+}

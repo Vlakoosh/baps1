@@ -1,0 +1,346 @@
+{
+  "bpm": 70,
+  "swing": 0.7999999999999998,
+  "master_volume": 1.0,
+  "selected_slot": 9,
+  "selected_pattern": 1,
+  "pattern_chain": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "fx": {
+    "permanent_pad": 2,
+    "filter_high_pass": 0.0,
+    "filter_low_pass": 0.0,
+    "reverb_mix": 0.0,
+    "reverb_decay": 0.0,
+    "chorus_depth": 0.0,
+    "chorus_rate": 0.0
+  },
+  "slots": [
+    {
+      "slot_number": 1,
+      "file_path": "../data\\sounds\\lofi loop 1.wav",
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 2,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 3,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 4,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 5,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 6,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 7,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 8,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": false
+    },
+    {
+      "slot_number": 9,
+      "file_path": "../data\\kits\\b bap drums 1.wav",
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 10,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 11,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 12,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 13,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 14,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 15,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    },
+    {
+      "slot_number": 16,
+      "file_path": null,
+      "volume": 1.0,
+      "pitch_offset": 0.0,
+      "choke_group": 0,
+      "is_kit": true
+    }
+  ],
+  "patterns": [
+    {
+      "pattern_number": 1,
+      "steps": {
+        "1": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "129": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "130": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "132": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "135": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "pattern_number": 2,
+      "steps": {
+        "129": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "135": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "pattern_number": 3,
+      "steps": {}
+    },
+    {
+      "pattern_number": 4,
+      "steps": {}
+    },
+    {
+      "pattern_number": 5,
+      "steps": {}
+    },
+    {
+      "pattern_number": 6,
+      "steps": {}
+    },
+    {
+      "pattern_number": 7,
+      "steps": {}
+    },
+    {
+      "pattern_number": 8,
+      "steps": {}
+    },
+    {
+      "pattern_number": 9,
+      "steps": {}
+    },
+    {
+      "pattern_number": 10,
+      "steps": {}
+    },
+    {
+      "pattern_number": 11,
+      "steps": {}
+    },
+    {
+      "pattern_number": 12,
+      "steps": {}
+    },
+    {
+      "pattern_number": 13,
+      "steps": {}
+    },
+    {
+      "pattern_number": 14,
+      "steps": {}
+    },
+    {
+      "pattern_number": 15,
+      "steps": {}
+    },
+    {
+      "pattern_number": 16,
+      "steps": {}
+    }
+  ]
+}
