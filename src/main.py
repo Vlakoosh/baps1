@@ -225,18 +225,12 @@ class BAPS1:
             self.update_display()
 
         elif button == Button.VOLUME:
-            if self.state.mode == Mode.VOLUME:
-                self.state.mode = Mode.FREE
-            else:
-                self.state.mode = Mode.VOLUME
-            self.update_display()
+            # Temporary: use VOLUME button as encoder 1 left (previous file)
+            self.handle_encoder_turn(1, -1)
 
         elif button == Button.TRIM:
-            if self.state.mode == Mode.TRIM:
-                self.state.mode = Mode.FREE
-            else:
-                self.state.mode = Mode.TRIM
-            self.update_display()
+            # Temporary: use TRIM button as encoder 1 right (next file)
+            self.handle_encoder_turn(1, 1)
 
         elif button == Button.RECORD:
             if self.state.mode == Mode.RECORD:
