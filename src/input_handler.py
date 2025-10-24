@@ -275,8 +275,26 @@ class InputHandler:
         for pin in self.row_pins:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
+        # Rotary encoder pins (BCM)
+        self.encoder_pins: Dict[int, tuple[int, int]] = {
+            1: (17, 27),
+            2: (22, 23),
+        }
+        for a_pin, b_pin in self.encoder_pins.values():
+            GPIO.setup(a_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(b_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+        self._encoder_last: Dict[int, int] = {
+            enc: self._read_encoder_state(enc) for enc in self.encoder_pins
+        }
+        self._encoder_accum: Dict[int, int] = {enc: 0 for enc in self.encoder_pins}
+
         self._active_buttons: Set[Button] = set()
-        self.scan_delay = 0.0005  # seconds between row drive/read
+        self.scan_delay = 0.00005  # seconds between column drive/read
+        print(
+            f"Matrix columns -> {self.column_pins}, rows -> {self.row_pins}, "
+            f"encoders -> {self.encoder_pins}"
+        )
 
     def _poll_gpio_matrix(self):
         """Scan the keypad matrix and emit callbacks."""
@@ -286,7 +304,8 @@ class InputHandler:
 
         for col_idx, col_pin in enumerate(self.column_pins):
             GPIO.output(col_pin, GPIO.HIGH)
-            time.sleep(self.scan_delay)
+            if self.scan_delay:
+                time.sleep(self.scan_delay)
 
             for row_idx, row_pin in enumerate(self.row_pins):
                 if GPIO.input(row_pin):
@@ -322,3 +341,44 @@ class InputHandler:
 
         self._active_buttons = pressed_now
         self.held_buttons = pressed_now.copy()
+        self._poll_encoders()
+
+    def _read_encoder_state(self, encoder_num: int) -> int:
+        """Return current two-bit state for an encoder."""
+        a_pin, b_pin = self.encoder_pins[encoder_num]
+        a = GPIO.input(a_pin)
+        b = GPIO.input(b_pin)
+        return ((a & 1) << 1) | (b & 1)
+
+    def _poll_encoders(self):
+        """Decode quadrature encoder transitions and emit turn callbacks."""
+        if self.on_encoder_turn is None:
+            return
+
+        transition_dir = {
+            (0, 1): 1, (1, 3): 1, (3, 2): 1, (2, 0): 1,
+            (0, 2): -1, (2, 3): -1, (3, 1): -1, (1, 0): -1,
+        }
+
+        for enc in self.encoder_pins:
+            last = self._encoder_last[enc]
+            current = self._read_encoder_state(enc)
+            if current == last:
+                continue
+
+            direction = transition_dir.get((last, current))
+            self._encoder_last[enc] = current
+
+            if direction is None:
+                continue
+
+            self._encoder_accum[enc] += direction
+
+            if self._encoder_accum[enc] >= 2:
+                self.on_encoder_turn(enc, 1)
+                print(f"Encoder {enc} turn: +1")
+                self._encoder_accum[enc] -= 2
+            elif self._encoder_accum[enc] <= -2:
+                self.on_encoder_turn(enc, -1)
+                print(f"Encoder {enc} turn: -1")
+                self._encoder_accum[enc] += 2

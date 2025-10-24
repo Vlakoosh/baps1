@@ -6,6 +6,7 @@ Main application entry point
 import sys
 import time
 import threading
+from pathlib import Path
 from state_manager import StateManager, Mode, FXSubMode
 from audio_engine import AudioEngine
 from display_manager import DisplayManager
@@ -23,6 +24,11 @@ PERMANENT_EFFECTS = {
     3: {"name": "Chorus", "hint": "K1 DEPTH  K2 RATE"},
 }
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
+STATE_PATH = BASE_DIR / "state.json"
+BACKUP_DIR = BASE_DIR / "backups"
+
 
 class BAPS1:
     """Main application class for BAPS-1 sampler"""
@@ -31,7 +37,7 @@ class BAPS1:
         print("Initializing BAPS-1 Sampler...")
 
         # Initialize components
-        self.state = StateManager(data_dir="../data")
+        self.state = StateManager(data_dir=str(DATA_DIR))
         self.audio = AudioEngine(sample_rate=22050)
         self.display = DisplayManager(use_emulator=False)
         self.input = InputHandler()
@@ -60,7 +66,7 @@ class BAPS1:
         self.sequencer.start()
 
         # Load saved state if it exists
-        self.state.load_state("../state.json")
+        self.state.load_state(str(STATE_PATH))
 
         # Sync sequencer with loaded state
         self.sequencer.set_bpm(self.state.bpm)
@@ -154,33 +160,29 @@ class BAPS1:
         print("\n=== CREATING BACKUP ===")
 
         # Create backups directory if it doesn't exist
-        backup_dir = "../backups"
+        backup_dir = BACKUP_DIR
         os.makedirs(backup_dir, exist_ok=True)
 
         # Generate timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         backup_name = f"backup_{timestamp}"
-        backup_path = os.path.join(backup_dir, backup_name)
+        backup_path = backup_dir / backup_name
         os.makedirs(backup_path, exist_ok=True)
 
         # Save current state
-        self.state.save_state("../state.json")
+        self.state.save_state(str(STATE_PATH))
 
         # Copy state.json
-        shutil.copy2("../state.json", os.path.join(backup_path, "state.json"))
+        shutil.copy2(str(STATE_PATH), backup_path / "state.json")
         print(f"[OK] Backed up state.json")
 
         # Copy all kit metadata files
-        data_dir = "../data"
+        data_dir = DATA_DIR
         metadata_count = 0
-        if os.path.exists(data_dir):
-            for file in os.listdir(data_dir):
-                if file.endswith(".json"):
-                    shutil.copy2(
-                        os.path.join(data_dir, file),
-                        os.path.join(backup_path, file)
-                    )
-                    metadata_count += 1
+        if data_dir.exists():
+            for file in data_dir.glob("*.json"):
+                shutil.copy2(str(file), backup_path / file.name)
+                metadata_count += 1
 
         if metadata_count > 0:
             print(f"[OK] Backed up {metadata_count} kit metadata files")
@@ -929,8 +931,8 @@ class BAPS1:
                     self.update_display()
                     last_display_update = current_time
 
-                # Small sleep to prevent CPU spinning
-                time.sleep(0.01)
+                # Small sleep to prevent CPU spinning (lower for faster input response)
+                time.sleep(0.002)
 
         except KeyboardInterrupt:
             print("\nShutting down...")
@@ -943,7 +945,7 @@ class BAPS1:
         print("Cleaning up...")
 
         # Save state
-        self.state.save_state("../state.json")
+        self.state.save_state(str(STATE_PATH))
 
         # Stop sequencer
         self.sequencer.stop()
